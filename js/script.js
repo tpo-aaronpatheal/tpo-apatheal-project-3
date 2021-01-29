@@ -44,7 +44,7 @@ the colors available for the targeted color design that the user selected*/
 let prevTarget = '';
 shirtColor.hidden = true;
 shirtColorLabel.hidden = true; 
-shirtDesign.addEventListener('click', function(e){
+shirtDesign.addEventListener('change', function(e){
     if (e.target.value === 'js puns'  || e.target.value === 'heart js'){
         shirtColor.hidden = false;
         shirtColorLabel.hidden = false;
@@ -119,7 +119,7 @@ function validateUserName(event) {
         event.preventDefault();
         userName.parentElement.classList.add("not-valid");
         userName.parentElement.classList.remove("valid");
-    } else if (isValidName.test(nameInput) ==true) {
+    } else if (isValidName.test(nameInput) == true) {
         userName.parentElement.classList.add("valid");
         userName.parentElement.classList.remove("not-valid");
     }
@@ -130,7 +130,12 @@ function validateEmail(event) {
     let isValidEmail = /^[^@]+@[^@]+\.[a-z]+$/i;
     if(isValidEmail.test(emailInput) == false) {
         event.preventDefault();
-    }    
+        userEmail.parentElement.classList.add("not-valid");
+        userEmail.parentElement.classList.remove("valid");
+    } else if (isValidEmail.test(emailInput) == true) {
+        userEmail.parentElement.classList.remove("not-valid");
+        userEmail.parentElement.classList.add("valid");
+    }
 }
 //Activities validator which checks to see if at least one activities box has been checked before submission.
 
@@ -143,7 +148,11 @@ function validateCardNumber(event) {
     let isValidCard = /^\d{13,16}$/;
     if(isValidCard.test(cardInput) == false){
         event.preventDefault();
-        
+        userCardNumber.parentElement.classList.add("not-valid");
+        userCardNumber.parentElement.classList.remove("valid");
+    } else if (isValidCard.test(cardInput) == true){
+        userCardNumber.parentElement.classList.remove("not-valid");
+        userCardNumber.parentElement.classList.add("valid");
     }
 }
 
@@ -152,6 +161,11 @@ function validateZip (event){
     let isValidZip = /^\d{5}$/;
     if(isValidZip.test(zipInput) == false){
         event.preventDefault();
+        userZipCode.parentElement.classList.add("not-valid");
+        userZipCode.parentElement.classList.remove("valid");
+    } else if (isValidZip.test(zipInput) == true){
+        userZipCode.parentElement.classList.remove("not-valid");
+        userZipCode.parentElement.classList.add("valid");
     }
 }
 function validateCvv(event){
@@ -159,16 +173,21 @@ function validateCvv(event){
     let isValidCvv = /^\d{3}$/;
     if(isValidCvv.test(cvvInput) == false){
         event.preventDefault();
+        userCvv.parentElement.classList.add("not-valid");
+        userCvv.parentElement.classList.remove("valid");
+    } else if (isValidCvv.test(cvvInput) == true){
+        userCvv.parentElement.classList.remove("not-valid");
+        userCvv.parentElement.classList.add("valid");
     }
 }
 
 form.addEventListener('submit',function(event) {
-    // validateUserName();
-    // validateEmail();
-    // validateActivities();
-    // validateCardNumber();
-    // validateZip();
-    // validateCvv();
+    validateUserName();
+    validateEmail();
+    validateActivities();
+    validateCardNumber();
+    validateZip();
+    validateCvv();
     event.preventDefault();
 })
 
