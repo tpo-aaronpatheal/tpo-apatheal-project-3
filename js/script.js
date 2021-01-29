@@ -117,7 +117,12 @@ function validateUserName(event) {
     let isValidName = /^[a-z]+$/i;
     if (isValidName.test(nameInput) == false) {
         event.preventDefault();
-    } 
+        userName.parentElement.classList.add("not-valid");
+        userName.parentElement.classList.remove("valid");
+    } else if (isValidName.test(nameInput) ==true) {
+        userName.parentElement.classList.add("valid");
+        userName.parentElement.classList.remove("not-valid");
+    }
 } 
 
 function validateEmail(event) {
