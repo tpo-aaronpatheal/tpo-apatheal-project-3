@@ -66,25 +66,25 @@ shirtDesign.addEventListener('change', function(e){
 This event listener listens for the users clicks. When the user selects an activiy, it adds the data cost to the total cost. Likewise, if a user 
 deselects an activity, it subtracts that events cost from the total cost.*/
 let activitiesTotalCost = 0 //variable that will store the total cost of activities
-activities.addEventListener('click', function(e){
+activities.addEventListener('change', function(e){
     const dataCost = +e.target.getAttribute('data-cost')
     if (e.target.checked) {
         activitiesTotalCost += dataCost;
-        isChecked = true;
     } else {
         activitiesTotalCost -= dataCost;
     }
-    for (let i = 0; i < activitiesCheckBox.length; i++) {
-        const checkBox = activitiesCheckBox[i];
-        if (checkBox.checked === true ) {
-            isChecked = true;
-        } else {
-            isChecked = false;
-        }
-    }
-    activitiesCost.innerHTML = `Total: ${activitiesTotalCost}`;
+    activitiesCost.innerHTML = `Total: $${activitiesTotalCost}`;
 });
 
+/* For Loop below loops through activity checkboxes and applies the focus or blur event depending on user input*/
+for( let i = 0; i < activitiesCheckBox.length; i++) {
+    activitiesCheckBox[i].addEventListener('focus', function(e) {
+        activitiesCheckBox[i].parentElement.classList.add('focus');
+    });
+    activitiesCheckBox[i].addEventListener('blur', function(e) {
+        activitiesCheckBox[i].parentElement.classList.remove('focus');
+    });
+}
 
 
 /*Disable conflicting times*/
