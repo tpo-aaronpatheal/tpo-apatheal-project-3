@@ -25,7 +25,8 @@ let isChecked = false;
 
 
 //Setting the focus property on name field when page first loads
-const userName = document.getElementById('name').focus();
+const userName = document.getElementById('name');
+userName.focus();
 
 /*Job Role Section-first line of code hides the otherJobRole text field on load. The event listener then listens for the users clicks. 
 The text field will only display if the user selects "other" in the drop down menu.*/
@@ -89,6 +90,21 @@ for( let i = 0; i < activitiesCheckBox.length; i++) {
 
 /*Disable conflicting times*/
 
+activities.addEventListener ('change', function(e){
+    const activityTime = e.target.getAttribute('data-day-and-time');
+    for (let i = 0; i < activitiesCheckBox.length; i++) {
+        if (e.target.checked === true && activityTime === activitiesCheckBox[i].getAttribute('data-day-and-time') 
+        && activitiesCheckBox[i] != e.target) {
+            activitiesCheckBox[i].parentElement.classList.add('disabled');
+            activitiesCheckBox[i].disabled = true;
+        } else if (e.target.checked === false && activityTime === activitiesCheckBox[i].getAttribute('data-day-and-time') 
+        && activitiesCheckBox[i].checked === false) {
+            activitiesCheckBox[i].parentElement.classList.remove('disabled');
+            activitiesCheckBox[i].disabled = false;
+        }
+    }
+});
+
 
 /*Payment Info Section. Hiding paypal and bitcoin payment option on load.  Event listener added to listen for the user's payment selection.
 The page loads with the default credit card fields. However if the user selects one of the other two methods, then it is hidden and vice versa. */
@@ -112,76 +128,110 @@ payment.addEventListener('change', function(e){
 
 /*Form Validation- */
 
-function validateUserName(event) {
+function validateUserName() {
     let nameInput = userName.value;
     let isValidName = /^[a-z]+$/i;
     if (isValidName.test(nameInput) == false) {
-        event.preventDefault();
+       // event.preventDefault();
         userName.parentElement.classList.add("not-valid");
-        userName.parentElement.classList.remove("valid");
+        userName.parentElement.classList.remove("valid"); 
+        userName.parentElement.lastElementChild.style.display = 'block'; 
     } else if (isValidName.test(nameInput) == true) {
         userName.parentElement.classList.add("valid");
         userName.parentElement.classList.remove("not-valid");
+        userName.parentElement.lastElementChild.style.display = 'none';
+        
     }
 } 
 
-function validateEmail(event) {
+function validateEmail() {
     let emailInput = userEmail.value;
     let isValidEmail = /^[^@]+@[^@]+\.[a-z]+$/i;
     if(isValidEmail.test(emailInput) == false) {
-        event.preventDefault();
+        //event.preventDefault();
         userEmail.parentElement.classList.add("not-valid");
         userEmail.parentElement.classList.remove("valid");
+        userEmail.parentElement.lastElementChild.style.display = 'block';
     } else if (isValidEmail.test(emailInput) == true) {
         userEmail.parentElement.classList.remove("not-valid");
         userEmail.parentElement.classList.add("valid");
+        userEmail.parentElement.lastElementChild.style.display = 'none';
     }
 }
 //Activities validator which checks to see if at least one activities box has been checked before submission.
 
 function validateActivities(){
-    const activityHint = document.querySelector('#activities-hint');
+    let isChecked = 0;
+    for (let i = 0; i < activitiesCheckBox.length; i++){
+        if (activitiesCheckBox[i].checked) {
+            isChecked += 1;
+        }
+    }
+    if (isChecked === 0) {
+        activities.parentElement.classList.add("not-valid");
+        activities.parentElement.classList.remove("valid");
+        activities.parentElement.lastElementChild.style.display = 'block';
+    } else if (isChecked < 1) {
+        activities.parentElement.classList.remove("not-valid");
+        activities.parentElement.classList.add("valid");
+        activities.parentElement.lastElementChild.style.display = 'none';
+    }
+
 }
 
-function validateCardNumber(event) {
+
+function validateCardNumber() {
     let cardInput = userCardNumber.value;
     let isValidCard = /^\d{13,16}$/;
+    const errorMessage = document.querySelector('span#cc-hint');
+    errorMessage.textContent = 'Credit card number must be between 13 - 16 digits and contain only numeric values';
     if(isValidCard.test(cardInput) == false){
-        event.preventDefault();
+        //event.preventDefault();
         userCardNumber.parentElement.classList.add("not-valid");
         userCardNumber.parentElement.classList.remove("valid");
+        userCardNumber.parentElement.lastElementChild.style.display = 'block';
     } else if (isValidCard.test(cardInput) == true){
         userCardNumber.parentElement.classList.remove("not-valid");
         userCardNumber.parentElement.classList.add("valid");
+        userCardNumber.parentElement.lastElementChild.style.display = 'none';
     }
-}
+    if(isValidCard.test(cardInput) == false){
 
-function validateZip (event){
+    }
+} 
+
+
+
+function validateZip (){
     let zipInput = userZipCode.value;
     let isValidZip = /^\d{5}$/;
     if(isValidZip.test(zipInput) == false){
-        event.preventDefault();
+        //event.preventDefault();
         userZipCode.parentElement.classList.add("not-valid");
         userZipCode.parentElement.classList.remove("valid");
+        userZipCode.parentElement.lastElementChild.style.display = 'block';
     } else if (isValidZip.test(zipInput) == true){
         userZipCode.parentElement.classList.remove("not-valid");
         userZipCode.parentElement.classList.add("valid");
+        userZipCode.parentElement.lastElementChild.style.display = 'none';
     }
 }
-function validateCvv(event){
+function validateCvv(){
     let cvvInput = userCvv.value;
     let isValidCvv = /^\d{3}$/;
     if(isValidCvv.test(cvvInput) == false){
-        event.preventDefault();
+        //event.preventDefault();
         userCvv.parentElement.classList.add("not-valid");
         userCvv.parentElement.classList.remove("valid");
+        userCvv.parentElement.lastElementChild.style.display = 'block';
     } else if (isValidCvv.test(cvvInput) == true){
         userCvv.parentElement.classList.remove("not-valid");
         userCvv.parentElement.classList.add("valid");
+        userCvv.parentElement.lastElementChild.style.display = 'none';
     }
 }
-
-form.addEventListener('submit',function(event) {
+//submit events
+form.addEventListener('submit', function(event) {
     validateUserName();
     validateEmail();
     validateActivities();
@@ -191,4 +241,19 @@ form.addEventListener('submit',function(event) {
     event.preventDefault();
 })
 
-//Accessibility-Register for Activiity
+//Key-up events
+form.addEventListener('keyup', function(event) {
+    validateUserName();
+    validateEmail();
+    validateActivities();
+    validateCardNumber();
+    validateZip();
+    validateCvv();
+});
+
+
+
+
+
+
+
