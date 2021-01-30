@@ -108,6 +108,10 @@ activities.addEventListener ('change', function(e){
 
 /*Payment Info Section. Hiding paypal and bitcoin payment option on load.  Event listener added to listen for the user's payment selection.
 The page loads with the default credit card fields. However if the user selects one of the other two methods, then it is hidden and vice versa. */
+const paymentSelector = document.querySelector('#payment').options[0];
+const paymentMethodCredit = document.querySelector('#payment').options[1];
+paymentSelector.selected = false;
+paymentMethodCredit.selected = true;
 payPal.hidden = true;
 bitCoin.hidden = true;
 payment.addEventListener('change', function(e){
@@ -135,11 +139,13 @@ function validateUserName() {
        // event.preventDefault();
         userName.parentElement.classList.add("not-valid");
         userName.parentElement.classList.remove("valid"); 
+        userName.classList.add("error-border");
         userName.parentElement.lastElementChild.style.display = 'block'; 
-        return false
+        return false;
     } else if (isValidName.test(nameInput) == true) {
         userName.parentElement.classList.add("valid");
         userName.parentElement.classList.remove("not-valid");
+        userName.classList.remove("error-border");
         userName.parentElement.lastElementChild.style.display = 'none';
         return true;
     }
@@ -152,11 +158,13 @@ function validateEmail() {
         //event.preventDefault();
         userEmail.parentElement.classList.add("not-valid");
         userEmail.parentElement.classList.remove("valid");
+        userEmail.classList.add("error-border");
         userEmail.parentElement.lastElementChild.style.display = 'block';
         return false;
     } else if (isValidEmail.test(emailInput) == true) {
         userEmail.parentElement.classList.remove("not-valid");
         userEmail.parentElement.classList.add("valid");
+        userEmail.classList.remove("error-border");
         userEmail.parentElement.lastElementChild.style.display = 'none';
         return true;
     }
@@ -194,11 +202,13 @@ function validateCardNumber() {
         //event.preventDefault();
         userCardNumber.parentElement.classList.add("not-valid");
         userCardNumber.parentElement.classList.remove("valid");
+        userCardNumber.classList.add("error-border");
         userCardNumber.parentElement.lastElementChild.style.display = 'block';
         return false;
     } else if (isValidCard.test(cardInput) == true){
         userCardNumber.parentElement.classList.remove("not-valid");
         userCardNumber.parentElement.classList.add("valid");
+        userCardNumber.classList.remove("error-border");
         userCardNumber.parentElement.lastElementChild.style.display = 'none';
         return true;
     }
@@ -213,11 +223,13 @@ function validateZip (){
         //event.preventDefault();
         userZipCode.parentElement.classList.add("not-valid");
         userZipCode.parentElement.classList.remove("valid");
+        userZipCode.classList.add("error-border");
         userZipCode.parentElement.lastElementChild.style.display = 'block';
         return false;
     } else if (isValidZip.test(zipInput) == true){
         userZipCode.parentElement.classList.remove("not-valid");
         userZipCode.parentElement.classList.add("valid");
+        userZipCode.classList.remove("error-border");
         userZipCode.parentElement.lastElementChild.style.display = 'none';
         return true;
     }
@@ -229,11 +241,13 @@ function validateCvv(){
         //event.preventDefault();
         userCvv.parentElement.classList.add("not-valid");
         userCvv.parentElement.classList.remove("valid");
+        userCvv.classList.add("error-border");
         userCvv.parentElement.lastElementChild.style.display = 'block';
         return false;
     } else if (isValidCvv.test(cvvInput) == true){
         userCvv.parentElement.classList.remove("not-valid");
         userCvv.parentElement.classList.add("valid");
+        userCvv.classList.remove("error-border");
         userCvv.parentElement.lastElementChild.style.display = 'none';
         return true;
     }
@@ -242,7 +256,13 @@ function validateCvv(){
 form.addEventListener('submit', function(event) {
     if (validateUserName() == false || validateEmail() == false || validateActivities() == false || validateCardNumber() == false ||
     validateZip() == false || validateCvv() == false){
-    event.preventDefault()
+    event.preventDefault();
+    validateUserName();
+    validateEmail();
+    validateActivities();
+    validateCardNumber();
+    validateZip();
+    validateCvv();
     } else {
     validateUserName();
     validateEmail();
