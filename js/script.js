@@ -136,11 +136,12 @@ function validateUserName() {
         userName.parentElement.classList.add("not-valid");
         userName.parentElement.classList.remove("valid"); 
         userName.parentElement.lastElementChild.style.display = 'block'; 
+        return false
     } else if (isValidName.test(nameInput) == true) {
         userName.parentElement.classList.add("valid");
         userName.parentElement.classList.remove("not-valid");
         userName.parentElement.lastElementChild.style.display = 'none';
-        
+        return true;
     }
 } 
 
@@ -152,10 +153,12 @@ function validateEmail() {
         userEmail.parentElement.classList.add("not-valid");
         userEmail.parentElement.classList.remove("valid");
         userEmail.parentElement.lastElementChild.style.display = 'block';
+        return false;
     } else if (isValidEmail.test(emailInput) == true) {
         userEmail.parentElement.classList.remove("not-valid");
         userEmail.parentElement.classList.add("valid");
         userEmail.parentElement.lastElementChild.style.display = 'none';
+        return true;
     }
 }
 //Activities validator which checks to see if at least one activities box has been checked before submission.
@@ -171,10 +174,12 @@ function validateActivities(){
         activities.parentElement.classList.add("not-valid");
         activities.parentElement.classList.remove("valid");
         activities.parentElement.lastElementChild.style.display = 'block';
-    } else if (isChecked < 1) {
+        return false;
+    } else if (isChecked > 0) {
         activities.parentElement.classList.remove("not-valid");
         activities.parentElement.classList.add("valid");
         activities.parentElement.lastElementChild.style.display = 'none';
+        return true;
     }
 
 }
@@ -190,13 +195,12 @@ function validateCardNumber() {
         userCardNumber.parentElement.classList.add("not-valid");
         userCardNumber.parentElement.classList.remove("valid");
         userCardNumber.parentElement.lastElementChild.style.display = 'block';
+        return false;
     } else if (isValidCard.test(cardInput) == true){
         userCardNumber.parentElement.classList.remove("not-valid");
         userCardNumber.parentElement.classList.add("valid");
         userCardNumber.parentElement.lastElementChild.style.display = 'none';
-    }
-    if(isValidCard.test(cardInput) == false){
-
+        return true;
     }
 } 
 
@@ -210,10 +214,12 @@ function validateZip (){
         userZipCode.parentElement.classList.add("not-valid");
         userZipCode.parentElement.classList.remove("valid");
         userZipCode.parentElement.lastElementChild.style.display = 'block';
+        return false;
     } else if (isValidZip.test(zipInput) == true){
         userZipCode.parentElement.classList.remove("not-valid");
         userZipCode.parentElement.classList.add("valid");
         userZipCode.parentElement.lastElementChild.style.display = 'none';
+        return true;
     }
 }
 function validateCvv(){
@@ -224,22 +230,28 @@ function validateCvv(){
         userCvv.parentElement.classList.add("not-valid");
         userCvv.parentElement.classList.remove("valid");
         userCvv.parentElement.lastElementChild.style.display = 'block';
+        return false;
     } else if (isValidCvv.test(cvvInput) == true){
         userCvv.parentElement.classList.remove("not-valid");
         userCvv.parentElement.classList.add("valid");
         userCvv.parentElement.lastElementChild.style.display = 'none';
+        return true;
     }
 }
 //submit events
 form.addEventListener('submit', function(event) {
+    if (validateUserName() == false || validateEmail() == false || validateActivities() == false || validateCardNumber() == false ||
+    validateZip() == false || validateCvv() == false){
+    event.preventDefault()
+    } else {
     validateUserName();
     validateEmail();
     validateActivities();
     validateCardNumber();
     validateZip();
     validateCvv();
-    event.preventDefault();
-})
+    }
+});
 
 //Key-up events
 form.addEventListener('keyup', function(event) {
@@ -251,6 +263,7 @@ form.addEventListener('keyup', function(event) {
     validateCvv();
 });
 
+//Credit card format
 
 
 
