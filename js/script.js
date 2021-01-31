@@ -308,11 +308,11 @@ form.addEventListener('keyup', function(event) {
 
 
 /* This function formats the users credit card input to include "-". I included this in my project for extra practice using the replace() 
-method*/
-/*function formatCC(text) {
+method.*/
+function formatCC(text) {
     const creditCard = /^(\d{4})(\d{4})(\d{4})(\d{1,4})$/;
     return text.replace(creditCard, '$1-$2-$3-$4');
 }
 userCardNumber.addEventListener ("blur", e => {
     e.target.value = formatCC(e.target.value);
-});*/
+});
