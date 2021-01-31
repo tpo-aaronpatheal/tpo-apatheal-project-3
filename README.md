@@ -1,1 +1,6 @@
-# tpo-apatheal-project-3
+# Project 3- Interactive Form Validation
+
+This project contains form validators which checks the users input in required fields. This form includes 
+a keyup event which provides real time error messaging under the Name, email, credit card, zip code, and cvv 
+input fields. The error message will display as the user is entering information and will display until the user has met 
+the validator requirements. There are two conditional error messages that display for the name and email field depending on the user input. Both fields have a 'Field cannot be blank' error message. The name field also has a 'Field cannot contain any numerical or special characters' error message. The email field has a 'Email address must be correctly formatted' error message as well. I would like to note that for extra practice, I utilized javascript to alter the error message  that displays for the credit card field musing the .textContent method. Lastly, I used the regex replace() method to format the users credit card input to include dashes("-"). I did this as a way to get extra practice using the regex concepts that were discussed in Unit 3. 
