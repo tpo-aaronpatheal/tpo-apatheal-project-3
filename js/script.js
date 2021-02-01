@@ -68,7 +68,7 @@ This event listener listens for the users clicks. When the user selects an activ
 deselects an activity, it subtracts that events cost from the total cost.*/
 let activitiesTotalCost = 0 //variable that will store the total cost of activities
 activities.addEventListener('change', function(e){
-    const dataCost = +e.target.getAttribute('data-cost')
+    const dataCost = +e.target.getAttribute('data-cost');
     if (e.target.checked) {
         activitiesTotalCost += dataCost;
     } else {
@@ -202,12 +202,12 @@ function validateActivities(){
     if (isChecked === 0) {
         activities.parentElement.classList.add("not-valid");
         activities.parentElement.classList.remove("valid");
-        activities.parentElement.lastElementChild.style.display = 'block';
+        activities.lastElementChild.style.display = 'block';
         return false;
     } else if (isChecked > 0) {
         activities.parentElement.classList.remove("not-valid");
         activities.parentElement.classList.add("valid");
-        activities.parentElement.lastElementChild.style.display = 'none';
+        activities.lastElementChild.style.display = 'none';
         return true;
     }
 
@@ -217,7 +217,7 @@ function validateActivities(){
 function validateCardNumber() {
     let cardInput = userCardNumber.value;
     //let isValidCard = /^\d{13,16}$/; //This was my original regex. I altered it to add a format function which is at the bottom of this code.
-    let isValidCard = /^(\d{4})(\d{4})(\d{4})(\d{1,4})$/;
+    let isValidCard = /^(\d{4})\-?(\d{4})\-?(\d{4})\-?(\d{1,4})$/;
     const errorMessage = document.querySelector('span#cc-hint');
     errorMessage.textContent = 'Credit card number must be between 13 - 16 digits and contain only numeric values';
     if(isValidCard.test(cardInput) == false){
@@ -297,20 +297,35 @@ form.addEventListener('submit', function(event) {
 
 /*Key-up event-The key up event provides real time error validation. As the user is entering information into the required fields, the
 error message will display until the user has met the validation requirements for that specific field*/
-form.addEventListener('keyup', function(event) {
+userName.addEventListener('keyup', function(event) {
     validateUserName();
+});
+
+userEmail.addEventListener('keyup', function(event) {
     validateEmail();
-    validateActivities();
+});
+
+userCardNumber.addEventListener('keyup', function(event) {
     validateCardNumber();
+});
+
+userZipCode.addEventListener('keyup', function(event) {
     validateZip();
+});
+
+userCvv.addEventListener('keyup', function(event) {
     validateCvv();
 });
 
+/*Click-event- listens for the users clicks on an activity.*/
+activities.addEventListener('click', function(event) {
+    validateActivities();
+});
 
 /* This function formats the users credit card input to include "-". I included this in my project for extra practice using the replace() 
 method.*/
 function formatCC(text) {
-    const creditCard = /^(\d{4})(\d{4})(\d{4})(\d{1,4})$/;
+    const creditCard = /^(\d{4})\-?(\d{4})\-?(\d{4})\-?(\d{1,4})$/;
     return text.replace(creditCard, '$1-$2-$3-$4');
 }
 userCardNumber.addEventListener ("blur", e => {
