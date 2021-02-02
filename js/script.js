@@ -27,7 +27,7 @@ let isChecked = false;
 const userName = document.getElementById('name');
 userName.focus();
 
-/*Job Role Section-first line of code hides the otherJobRole text field on load. The event listener then listens for the users clicks. 
+/*Job Role Section-first line of code hides the otherJobRole text field on load. The event listener then listens for changes made by the user. 
 The text field will only display if the user selects "other" in the drop down menu.*/
 otherJobRole.style.display = 'none';
 userJobRole.addEventListener('change', function(e) {
@@ -38,9 +38,9 @@ userJobRole.addEventListener('change', function(e) {
     }
 });
 
-/*T Shirt Info Section-First line of code set prevTarget to an empty string. Then the shirt color drop down menu is disabled
-until a shirt design is selected by the user. Once the design is selected, it loops through the color options and only displays
-the colors available for the targeted color design that the user selected*/
+/*T Shirt Info Section-When the page first loads, the color drop down menu is disabled until the user selects a desigm. 
+Once the design is selected, it loops through the color options and only displays the colors available for the targeted 
+color design that the user selected*/
 shirtColor.disabled = true;
 shirtDesign.addEventListener('change', function(e){
         shirtColor.disabled = false;
@@ -60,8 +60,8 @@ shirtDesign.addEventListener('change', function(e){
 });
 
 /*Register for Activities Section-the activities, activiesTotalCost, and activities cost variables were declared globally above.
-This event listener listens for the users clicks. When the user selects an activiy, it adds the data cost to the total cost. Likewise, if a user 
-deselects an activity, it subtracts that events cost from the total cost.*/
+This event listener listens for the selection changes made by the user. When the user selects an activiy, it adds the data cost to the total cost.
+Likewise, if a user deselects an activity, it subtracts that events cost from the total cost.*/
 let activitiesTotalCost = 0 //variable that will store the total cost of activities
 activities.addEventListener('change', function(e){
     const dataCost = +e.target.getAttribute('data-cost');
@@ -84,7 +84,8 @@ for( let i = 0; i < activitiesCheckBox.length; i++) {
 }
 
 
-/*Disable conflicting times as user selects from available activities*/
+/*Disable conflicting times as user selects from available activities. If a user deselects an activity, then the conflicting 
+activity will become available again.*/
 
 activities.addEventListener ('change', function(e){
     const activityTime = e.target.getAttribute('data-day-and-time');
@@ -136,7 +137,8 @@ Please enter a valid email address' if the user attempts to submit without enter
 'Email address must be formatted correctly' error message. The activities validator checks to ensure that at least one
 activity is checked prior to form submission. Card validator ensures that the user enters 13-16 numerical characters. The zip validator ensures
 the user enters 5 numerical characters and the cvv validator ensures the user enters 3 numerical characters. If any of these fields are not complete, 
-the validators will prevent the form to submit.*/
+the validators will prevent the form to submit. There are conditionals added to the Card validator, zip validator, and cvv validator that checks
+to see if the credit card method has been selected prior to attemting validation.*/
 
 function validateUserName() {
     let nameInput = userName.value;
@@ -275,7 +277,7 @@ function validateCvv(){
     }
 }
 /*Submit event-The submit even listens for the users click when attempting to submit the form. If any of the validator requirements are not met, 
-then the event.prevent default will stop the form from submitting. If all of the validator requirements have been met, then the form will
+then the event.preventDefault will stop the form from submitting. If all of the validator requirements have been met, then the form will
 "submit" and page will refresh*/
 form.addEventListener('submit', function(event) {
     if (validateUserName() == false || validateEmail() == false || validateActivities() == false || validateCardNumber() == false ||
@@ -298,7 +300,7 @@ form.addEventListener('submit', function(event) {
 });
 
 /*Key-up event-The key up event provides real time error validation. As the user is entering information into the required fields, the
-error message will display until the user has met the validation requirements for that specific field*/
+error message will display until the user has met the validation requirements for that specific field.*/
 userName.addEventListener('keyup', function(event) {
     validateUserName();
 });
