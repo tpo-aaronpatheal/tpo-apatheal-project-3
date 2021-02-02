@@ -6,7 +6,6 @@ const userJobRole = document.querySelector("#title");
 const shirtColor = document.getElementById("color");
 const shirtDesign = document.getElementById("shirt-designs");
 const shirtColorOptions = document.querySelectorAll('#color > option')
-const shirtColorLabel = document.querySelector('label[for="color"]');//created this variable so I can hide the color label until the user selects a shirt design. 
 const activities = document.querySelector('#activities');
 const activitiesCost = document.querySelector('#activities-cost');
 const activitiesCheckBox = document.querySelectorAll("input[type='checkbox']");
@@ -46,9 +45,12 @@ let prevTarget = '';
 shirtColor.disabled = true;
 shirtDesign.addEventListener('change', function(e){
         shirtColor.disabled = false;
-         if(e.target.value !== prevTarget) {
-               shirtColorOptions[0].selected = true;
+         if(e.target.value === 'js puns') {
+               shirtColorOptions[1].selected = true;
             }
+         if (e.target.value === 'heart js') {
+                shirtColorOptions[4].selected = true;
+        }
         for(let i = 1; i < shirtColorOptions.length; i++){
             if(shirtColorOptions[i].getAttribute('data-theme') === e.target.value){
                 shirtColorOptions[i].style.display = '';
