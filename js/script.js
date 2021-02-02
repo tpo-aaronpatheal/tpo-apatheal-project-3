@@ -41,7 +41,6 @@ userJobRole.addEventListener('change', function(e) {
 /*T Shirt Info Section-First line of code set prevTarget to an empty string. Then the shirt color drop down menu is disabled
 until a shirt design is selected by the user. Once the design is selected, it loops through the color options and only displays
 the colors available for the targeted color design that the user selected*/
-let prevTarget = '';
 shirtColor.disabled = true;
 shirtDesign.addEventListener('change', function(e){
         shirtColor.disabled = false;
@@ -58,7 +57,6 @@ shirtDesign.addEventListener('change', function(e){
                 shirtColorOptions[i].style.display = 'none';
             }
         }
-    prevTarget = e.target.value;
 });
 
 /*Register for Activities Section-the activities, activiesTotalCost, and activities cost variables were declared globally above.
@@ -170,7 +168,7 @@ function validateEmail() {
     let isValidEmail = /^[^@]+@[^@]+\.[a-z]+$/i;
     const errorMessage = document.querySelector('span#email-hint');
     if (emailInput === '') {
-        errorMessage.innerText = 'Field cannt be blank. Please enter a valid email address';
+        errorMessage.innerText = 'Field cannot be blank. Please enter a valid email address';
     } else {
         errorMessage.innerText = 'Email address must be formatted correctly'
     };
