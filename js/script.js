@@ -31,7 +31,7 @@ userName.focus();
 /*Job Role Section-first line of code hides the otherJobRole text field on load. The event listener then listens for the users clicks. 
 The text field will only display if the user selects "other" in the drop down menu.*/
 otherJobRole.style.display = 'none';
-userJobRole.addEventListener("click", function(e) {
+userJobRole.addEventListener('change', function(e) {
     if(e.target.value === 'other') {
         otherJobRole.style.display = '';
     } else {
@@ -43,14 +43,11 @@ userJobRole.addEventListener("click", function(e) {
 until a shirt design is selected by the user. Once the design is selected, it loops through the color options and only displays
 the colors available for the targeted color design that the user selected*/
 let prevTarget = '';
-shirtColor.hidden = true;
-shirtColorLabel.hidden = true; 
+shirtColor.disabled = true;
 shirtDesign.addEventListener('change', function(e){
-    if (e.target.value === 'js puns'  || e.target.value === 'heart js'){
-        shirtColor.hidden = false;
-        shirtColorLabel.hidden = false;
-            if(e.target.value !== prevTarget) {
-                shirtColorOptions[0].selected = 'selected';
+        shirtColor.disabled = false;
+         if(e.target.value !== prevTarget) {
+               shirtColorOptions[0].selected = true;
             }
         for(let i = 1; i < shirtColorOptions.length; i++){
             if(shirtColorOptions[i].getAttribute('data-theme') === e.target.value){
@@ -59,7 +56,6 @@ shirtDesign.addEventListener('change', function(e){
                 shirtColorOptions[i].style.display = 'none';
             }
         }
-    }
     prevTarget = e.target.value;
 });
 
@@ -215,61 +211,67 @@ function validateActivities(){
 
 
 function validateCardNumber() {
+    if (payment.value == 'credit-card'){
     let cardInput = userCardNumber.value;
     //let isValidCard = /^\d{13,16}$/; //This was my original regex. I altered it to add a format function which is at the bottom of this code.
-    let isValidCard = /^(\d{4})\-?(\d{4})\-?(\d{4})\-?(\d{1,4})$/;
-    const errorMessage = document.querySelector('span#cc-hint');
-    errorMessage.textContent = 'Credit card number must be between 13 - 16 digits and contain only numeric values';
-    if(isValidCard.test(cardInput) == false){
-        //event.preventDefault();
-        userCardNumber.parentElement.classList.add("not-valid");
-        userCardNumber.parentElement.classList.remove("valid");
-        userCardNumber.classList.add("error-border");
-        userCardNumber.parentElement.lastElementChild.style.display = 'block';
-        return false;
-    } else if (isValidCard.test(cardInput) == true){
-        userCardNumber.parentElement.classList.remove("not-valid");
-        userCardNumber.parentElement.classList.add("valid");
-        userCardNumber.classList.remove("error-border");
-        userCardNumber.parentElement.lastElementChild.style.display = 'none';   
-        return true;
+        let isValidCard = /^(\d{4})\-?(\d{4})\-?(\d{4})\-?(\d{1,4})$/;
+        const errorMessage = document.querySelector('span#cc-hint');
+        errorMessage.textContent = 'Credit card number must be between 13 - 16 digits and contain only numeric values';
+        if(isValidCard.test(cardInput) == false){
+            //event.preventDefault();
+            userCardNumber.parentElement.classList.add("not-valid");
+            userCardNumber.parentElement.classList.remove("valid");
+            userCardNumber.classList.add("error-border");
+             userCardNumber.parentElement.lastElementChild.style.display = 'block';
+            return false;
+        } else if (isValidCard.test(cardInput) == true){
+            userCardNumber.parentElement.classList.remove("not-valid");
+            userCardNumber.parentElement.classList.add("valid");
+            userCardNumber.classList.remove("error-border");
+            userCardNumber.parentElement.lastElementChild.style.display = 'none';   
+            return true;
+        } 
     }
 } 
 
 function validateZip (){
-    let zipInput = userZipCode.value;
-    let isValidZip = /^\d{5}$/;
-    if(isValidZip.test(zipInput) == false){
-        //event.preventDefault();
-        userZipCode.parentElement.classList.add("not-valid");
-        userZipCode.parentElement.classList.remove("valid");
-        userZipCode.classList.add("error-border");
-        userZipCode.parentElement.lastElementChild.style.display = 'block';
-        return false;
-    } else if (isValidZip.test(zipInput) == true){
-        userZipCode.parentElement.classList.remove("not-valid");
-        userZipCode.parentElement.classList.add("valid");
-        userZipCode.classList.remove("error-border");
-        userZipCode.parentElement.lastElementChild.style.display = 'none';
-        return true;
+    if (payment.value == 'credit-card'){
+        let zipInput = userZipCode.value;
+        let isValidZip = /^\d{5}$/;
+        if(isValidZip.test(zipInput) == false){
+            //event.preventDefault();
+            userZipCode.parentElement.classList.add("not-valid");
+            userZipCode.parentElement.classList.remove("valid");
+            userZipCode.classList.add("error-border");
+            userZipCode.parentElement.lastElementChild.style.display = 'block';
+            return false;
+     } else if (isValidZip.test(zipInput) == true){
+            userZipCode.parentElement.classList.remove("not-valid");
+            userZipCode.parentElement.classList.add("valid");
+            userZipCode.classList.remove("error-border");
+            userZipCode.parentElement.lastElementChild.style.display = 'none';
+         return true;
+        }
     }
 }
 function validateCvv(){
-    let cvvInput = userCvv.value;
-    let isValidCvv = /^\d{3}$/;
-    if(isValidCvv.test(cvvInput) == false){
-        //event.preventDefault();
-        userCvv.parentElement.classList.add("not-valid");
-        userCvv.parentElement.classList.remove("valid");
-        userCvv.classList.add("error-border");
-        userCvv.parentElement.lastElementChild.style.display = 'block';
-        return false;
-    } else if (isValidCvv.test(cvvInput) == true){
-        userCvv.parentElement.classList.remove("not-valid");
-        userCvv.parentElement.classList.add("valid");
-        userCvv.classList.remove("error-border");
-        userCvv.parentElement.lastElementChild.style.display = 'none';
-        return true;
+    if (payment.value == 'credit-card') {
+        let cvvInput = userCvv.value;
+        let isValidCvv = /^\d{3}$/;
+        if(isValidCvv.test(cvvInput) == false){
+            //event.preventDefault();
+            userCvv.parentElement.classList.add("not-valid");
+            userCvv.parentElement.classList.remove("valid");
+            userCvv.classList.add("error-border");
+            userCvv.parentElement.lastElementChild.style.display = 'block';
+            return false;
+        } else if (isValidCvv.test(cvvInput) == true){
+            userCvv.parentElement.classList.remove("not-valid");
+            userCvv.parentElement.classList.add("valid");
+            userCvv.classList.remove("error-border");
+            userCvv.parentElement.lastElementChild.style.display = 'none';
+            return true;
+        }
     }
 }
 /*Submit event-The submit even listens for the users click when attempting to submit the form. If any of the validator requirements are not met, 
